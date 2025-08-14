@@ -27,7 +27,7 @@ the tear, instead of zeros and ones. The MK-51 image in Travis'
 repository has a small tearing at the bottom that only affects bits
 around it. The FX-2500 image in that repository has some sharpness and
 other irregularities that make quite a few blocks wrong. Possibly
-quite a few errors could be fixed by not using examples of a one and a
+at least some errors could be fixed by not using examples of a one and a
 zero from one place in the photo for decoding all
 areas. `combine_*_images` functions combine bits from two images using
 manually selected mostly correct ranges.
