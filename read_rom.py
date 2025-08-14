@@ -103,6 +103,7 @@ class Image:
     img: np.ndarray
     gray: np.ndarray
 
+# From https://x.com/travisgoodspeed/status/1683224934967828480
 MK51_ROM = ImageDesc(
     path = "img/mk51_rom_die.jpg",
     width = 4096,
