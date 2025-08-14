@@ -121,6 +121,27 @@ FX2500_ROM_2 = ImageDesc(
     cols_corners = [[(571.2, 200.2), (3828.8, 299.1)],
                     [(543.2, 1109.8), (3801.4, 1197.3)]])
 
+# From https://github.com/travisgoodspeed/mk51fx2500
+FX2500_GH = ImageDesc(
+    path = "img/fx2500.bmp",
+    width = 6929,
+    height = 2306,
+    rows_corners = [[(869.7, 438.1), (6899.2, 333.2)],
+                    [(924.3, 2036.3), (6925.1, 1935.0)]],
+    cols_corners = [[(926.9, 423.3), (6846.6, 321.0)],
+                    [(955.5, 2071.7), (6874.5, 1946.7)]])
+
+# From https://github.com/travisgoodspeed/mk51fx2500
+MK51_GH = ImageDesc(
+    path = "img/mk51.tif",
+    width = 9409,
+    height = 3210,
+    rows_corners = [[(1250.3, 483.5), (8606.1, 492.1)],
+                    [(1215.1, 2556.4), (8638.0, 2567.8)]],
+    cols_corners = [[(1306.3, 465.6), (8536.5, 477.1)],
+                    [(1303.2, 2600.1), (8537.1, 2583.3)]])
+
+
 def load_image(desc):
     img = imageio.imread(desc.path)
     # gray = np.mean(img, axis=-1)
@@ -229,22 +250,24 @@ def kmeans(bits, m0, m1):
     for step in range(10):
         d = dist_from_means(bits, m)
         closer = np.argmin(d, axis=0)
+        print(np.count_nonzero(closer))
         m = []
         for i in range(2):
             m.append(np.mean(bits[closer == i], axis=0))
     return tuple(m)
 
 def read_with_kmeans_on_tile(image, start_row, start_col, limit_row, limit_col):
+    r = image.desc.width * 5 // 4096
     norm = False
     bits = []
     nr = limit_row - start_row
     nc = limit_col - start_col
     for i in range(start_row, limit_row):
         for j in range(start_col, limit_col):
-            bits.append(get_area(image, i, j, 5, norm=norm).flatten())
+            bits.append(get_area(image, i, j, r, norm=norm).flatten())
     bits = np.array(bits)
-    ex1 = get_area(image, 1, 1, 5, norm=norm).flatten()
-    ex0 = get_area(image, 2, 1, 5, norm=norm).flatten()
+    ex1 = get_area(image, 1, 1, r, norm=norm).flatten()
+    ex0 = get_area(image, 2, 1, r, norm=norm).flatten()
     m = kmeans(bits, ex0, ex1)
     d = dist_from_means(bits, m)
 
