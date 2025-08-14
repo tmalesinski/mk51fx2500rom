@@ -76,6 +76,15 @@ FIXES = {
     (60, 325): 0,
     (61, 168): 0,
     (70, 316): 0,
+    (24, 240): 1,
+    (25, 240): 1,
+    (44, 226): 1,
+    (48, 266): 1,
+    (59, 240): 1,
+    (61, 169): 1,
+    (78, 48): 1,
+    (79, 48): 1,
+    (79, 49): 1,
 }
 
 @dataclass
@@ -250,7 +259,6 @@ def kmeans(bits, m0, m1):
     for step in range(10):
         d = dist_from_means(bits, m)
         closer = np.argmin(d, axis=0)
-        print(np.count_nonzero(closer))
         m = []
         for i in range(2):
             m.append(np.mean(bits[closer == i], axis=0))
@@ -335,6 +343,17 @@ def combine_fx_images():
     img2 = load_image(FX2500_ROM_2)
     bits2 = read_with_kmeans(img2)
     return np.concatenate((bits2[0:16], bits1[16:]), axis=0)
+
+def combine_gh_images():
+    img1 = load_image(FX2500_GH)
+    bits1 = read_with_kmeans(img1)
+    img2 = load_image(MK51_GH)
+    bits2 = read_with_kmeans(img2)
+    bits = bits1.copy()
+    s1 = slice(43, 80)
+    s2 = slice(126, 149)
+    bits[s1, s2] = bits2[s1, s2]
+    return bits
 
 def apply_fixes(bits):
     res = bits.copy()
