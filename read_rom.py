@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import imageio
 import matplotlib.pyplot as plt
 import numpy as np
@@ -378,3 +380,8 @@ def show_selected_bit_versions(mask, *images):
             ax.imshow(img.img[ibp[1] - 10:ibp[1] + 10,
                               ibp[0] - 10:ibp[0] + 10])
         plt.show()
+
+if __name__ == "__main__":
+    b = apply_fixes(combine_gh_images())
+    with open("mk51fx2500rom.txt", "w") as f:
+        f.write(dump_str(b))
