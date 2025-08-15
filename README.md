@@ -6,8 +6,16 @@ code to read the die photos semi-automatically.
 
 To run the code, you'll need to get the images from [Travis
 Goodspeed's repository](https://github.com/travisgoodspeed/mk51fx2500)
-and put them into a directory named `img`. Then you can run
-`./read_rom.py`. It will read the images and write
+and put them into a directory named `img`:
+
+```
+mkdir -p img
+cd img
+ln -s ../../mk51fx2500/fx2500.bmp img
+ln -s ../../mk51fx2500/mk51.tif img
+```
+
+Then you can run `./read_rom.py`. It will read the images and write
 `mk51fx2500rom.txt`.
 
 Given coordinates of corners of rows and columns, the script computes
@@ -24,7 +32,7 @@ only 6 bits are read incorrectly. The FX-2500 ROM images in the X
 threads all have some tearing. In the areas around the tearings the
 code tends to classify bits into those on the left and on the right of
 the tear, instead of zeros and ones. The MK-51 image in Travis'
-repository has a small tearing at the bottom that only affects bits
+GitHub repository has a small tearing at the bottom that only affects bits
 around it. The FX-2500 image in that repository has some sharpness and
 other irregularities that make quite a few blocks wrong. Possibly
 at least some errors could be fixed by not using examples of a one and a
