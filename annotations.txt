@@ -1,0 +1,24 @@
+l 0d4 pi_to_r0
+
+c 2dd key: swap
+c 2df key: swap with mem
+c 34d enter digit
+c 3e4 key: c
+c 2b4 key: log ln
+c 2b6 key: 10^x e^x
+c 2c8 key: sqrt
+c 2ca key: x^2
+c 333 key: ce
+c 30d key: right bracket
+c 30f key: left bracket
+c 3d8 key (4,1)
+c 345 key: decimal point
+c 3df key: f
+c 3dc key: (6,1)
+c 2ec key: 1/x
+c 36c key: exp/pi
+c 2de key: memory in
+c 2bc key: dms
+c 3dd key: mode
+c 354 key: neg
+c 2dc key: memory recall
