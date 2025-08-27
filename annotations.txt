@@ -30,3 +30,18 @@ c 2bc key: dms
 c 3dd key: mode
 c 354 key: neg
 c 2dc key: memory recall
+
+c 3d1 is c pressed?
+c 3d9 is mode/f pressed?
+c 300 column 4
+c 302 column 5
+c 294 key: y^x
+c 2b0 key: y^x / root(y, x)
+c 296 binary op keys?
+c 288 key: trig fun
+c 28a key: inv trig fun
+
+l 221 xtrig
+c 221 execute a trigonometric function
+l 187 xinvtrig
+c 187 execute an inverse trigonometric function
