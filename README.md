@@ -11,8 +11,8 @@ and put them into a directory named `img`:
 ```
 mkdir -p img
 cd img
-ln -s ../../mk51fx2500/fx2500.bmp img
-ln -s ../../mk51fx2500/mk51.tif img
+ln -s ../../mk51fx2500/fx2500.bmp .
+ln -s ../../mk51fx2500/mk51.tif .
 ```
 
 Then you can run `./read_rom.py`. It will read the images and write
