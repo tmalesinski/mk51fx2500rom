@@ -1,4 +1,41 @@
+x 381
+l 381 error
+
+l 046 shl_r0_upd_exp
+l 04a normalize_r0
+l 072 norm_zero_r0
+l 054 norm_r0_check_exp
+
 l 0d4 pi_to_r0
+c 277 pi/180
+l 277 pi_180_to_r1
+l 26c ln10_to_r1
+c 250 set R1 to 0.9
+l 250 set_r1_to_09
+l 018 set_r1_to_45
+l 01e one_to_r1
+l 001 tan_cordic_to_r1
+c 001 for r0[0] = n >= 1, set r1 to atan(1e-n rad)
+l 028 ln_cordic_to_r1
+c 028 n = r0[0], set r1 to ln (1 + 1en)
+
+l 0cc div_r0_3600
+l 0c5 div_r0_60
+l 0c4 inv_r0
+l 0c3 square_r0
+l 0c7 deg_to_rad_r0
+l 0c2 mulr01
+l 0d3 swap_mulr01
+l 0c1 divr01
+l 0e0 rad_to_deg_r0
+l 082 addr01
+l 0a2 add_one_to_r0
+c 08b negate r0 and add 90
+l 08b neg_add_90_r0
+l 08f sqrt_r0
+l 239 fact_r0
+
+l 330 add_or_sub_stat
 
 c 2dd key: swap
 c 2df key: swap with mem
