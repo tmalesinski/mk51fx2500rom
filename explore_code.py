@@ -16,11 +16,6 @@ def create_emulator():
 def reg_str(r):
     return "".join(f"{d:x}" for d in reversed(r))
 
-def test_pi():
-    e = create_emulator()
-    e.call(0x0d4)
-    return decode_num(e.regs[0])
-
 def test_pi180():
     e = create_emulator()
     e.call(0x277)
