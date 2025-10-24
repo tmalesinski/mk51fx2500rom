@@ -1,0 +1,3 @@
+[submodule "mk51fx2500re"]
+	path = mk51fx2500re
+	url = https://github.com/tmalesinski/mk51fx2500re
