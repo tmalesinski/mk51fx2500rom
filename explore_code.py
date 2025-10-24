@@ -93,6 +93,78 @@ def get_key_entries():
             estr = " ".join(f"{a:03x}" for a in e)
             print(f"{key}: {estr}")
 
+class KeyEntry:
+    def __init__(self, desc):
+        self.desc = desc
+
+    def describe(self, em):
+        if isinstance(self.desc, str):
+            return self.desc
+        return self.desc(em)
+
+key_entries = {
+    0x2dd: KeyEntry("swap"),
+    0x2df: KeyEntry("swap with mem"),
+    0x2cb: KeyEntry("sum x"),
+    0x34d: KeyEntry(lambda em: f"digit {em.regs[2][0]}"),
+    0x3e4: KeyEntry("c"),
+    0x3e6: KeyEntry("f c"),
+    0x3e7: KeyEntry("c (stat)"),
+    0x2b4: KeyEntry("log/ln"),
+    0x2b6: KeyEntry("10^x/e^x"),
+    0x2c8: KeyEntry("sqrt"),
+    0x2ca: KeyEntry("x^2"),
+    0x333: KeyEntry("ce"),
+    0x30d: KeyEntry(")]"),
+    0x318: KeyEntry("avg x"),
+    0x30f: KeyEntry("[("),
+    0x31a: KeyEntry("n (stat)"),
+    0x345: KeyEntry("."),
+    0x3df: KeyEntry("inv"),
+    0x2ec: KeyEntry("1/x"),
+    0x2ee: KeyEntry("n!"),
+    0x34b: KeyEntry("sum x^2"),
+    0x36c: KeyEntry("exp/pi"),
+    0x36d: KeyEntry("pi"),
+    0x2de: KeyEntry("M in"),
+    0x33b: KeyEntry("??? std"),
+    0x2bc: KeyEntry("dms"),
+    0x3dd: KeyEntry("mode"),
+    0x354: KeyEntry("neg"),
+    0x2dc: KeyEntry("MR"),
+    0x296: KeyEntry(
+        lambda em: ["pow", "root", "/", "*", "-", "+"][em.regs[2][14] - 2]),
+    0x221: KeyEntry("trig"),
+    0x187: KeyEntry("inv trig"),
+    0x2ac: KeyEntry(lambda em: "=" if em.regs[2][14] == 5 else "M+"),
+    0x2ae: KeyEntry("ins/del (stat)"),
+    0x319: KeyEntry("MC"),
+    0x3dc: KeyEntry("INV"),
+    0x3d8: KeyEntry("F1"),
+    0x3df: KeyEntry("F2"),
+}
+
+def describe_key_entries():
+    for row in range(8):
+        for col in range(1, 6):
+            key = row * 10 + col
+            ent = []
+            for prefix in [[], [KF], [41], [61], [KF, KMODE]]:
+                emul = create_emulator()
+                execute_seq(emul, prefix, print_disp=False)
+                emul.keycode = 0
+                emul.until(0x3c5)
+                emul.keycode = key
+                for i in range(200):
+                    emul.step()
+                    if emul.pc in key_entries:
+                        ent.append(key_entries[emul.pc].describe(emul))
+                        break
+                else:
+                    ent.append("???")
+            estr = " ".join(f"{d:13s}" for d in ent)
+            print(f"{key}: {estr}")
+
 def display(e):
     num = ""
     ind = ""
