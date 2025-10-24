@@ -1,10 +1,20 @@
 x 381
 l 381 error
+x 329
+x 327
+x 39f
+x 320
+x 2e9
+x 3c3
 
 l 046 shl_r0_upd_exp
+l 040 shr_r0_upd_exp
+l 041 prepend_one_upd_exp
 l 04a normalize_r0
 l 072 norm_zero_r0
 l 054 norm_r0_check_exp
+l 048 round9_r0
+l 053 round8_r0
 
 l 0d4 pi_to_r0
 c 277 pi/180
@@ -62,21 +72,60 @@ c 2ee key: n!
 c 34b key: sum x^2
 c 36c key: exp/pi
 c 2de key: memory in
-c 33b key: maybe std dev
+c 33b key: maybe std dev, n or n-1
 c 2bc key: dms
 c 3dd key: mode
 c 354 key: neg
 c 2dc key: memory recall
 
 c 3d1 is c pressed?
-c 3d9 is mode/f pressed?
+c 3d9 column 1, is mode/f pressed?
 c 300 column 4
 c 302 column 5
+c 304 column 1
+c 30b column 1, row < 2
+c 30a column 1, row 2, 3
+c 305 col 1, row 2, 3, no sd
+c 307 col 1, row 2, 3, sd
+c 2c1 column 1, row 0
+c 2c3 column 1, row 1
+c 306 col > 1
+c 32f col 4, row < 6
+c 32e col 4, row >= 6
+c 33a col 4, row >= 6, no sd
 c 294 key: y^x
 c 2b0 key: y^x / root(y, x)
 c 296 binary op keys?
 c 288 key: trig fun
 c 28a key: inv trig fun
+c 332 col 4, 2 <= row < 6
+c 323 col 4, 2 <= row < 6, f
+c 334 col 4, row 3, f
+c 31b col 4, row 3, f, sd
+c 319 col 4, row 3, f, no sd
+
+c 336 col 4, 3 < row < 6, f
+c 337 col 4, row 2, f
+
+c 341 col 2, 3
+c 343 col 2, 3, row < 6
+c 35a col 3, row < 6
+c 358 col 2, row < 6
+c 359 col 2, row < 6, no f, digits 4-9
+c 35c col 3, row < 6, no f
+c 353 col 3, row < 3, no f, digits 1-3
+c 352 col 3, 3 < row < 6, no f
+c 350 col 3, row 3, digit 0
+c 35e col 3, row < 6, f
+c 357 col 3, row < 4, f
+c 356 col 3, row 5, f
+c 35b col 2, row < 6, f
+c 34c col 2, row 3 (digit 7), f
+c 34e col 2, 3 < row < 6, f
+c 348 col 2, row 4 (digit 8), f
+c 340 col 2, 3, row 6
+c 344 col 3, row 6 (EXP/pi)
+c 346 col 2, row 6 (1/x, n!, sum x^2)
 
 l 221 xtrig
 c 221 execute a trigonometric function
