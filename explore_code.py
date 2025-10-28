@@ -98,8 +98,8 @@ class KeyEntry:
         return self.desc(em)
 
 key_entries = {
-    0x2dd: KeyEntry("swap"),
-    0x2df: KeyEntry("swap with mem"),
+    0x2dd: KeyEntry("X<->Y"),
+    0x2df: KeyEntry("M<->M"),
     0x2cb: KeyEntry("sum x"),
     0x34d: KeyEntry(lambda em: f"digit {em.regs[2][0]}"),
     0x3e4: KeyEntry("c"),
@@ -132,7 +132,7 @@ key_entries = {
     0x221: KeyEntry("trig"),
     0x187: KeyEntry("inv trig"),
     0x2ac: KeyEntry(lambda em: "=" if em.regs[2][14] == 5 else "M+"),
-    0x2ae: KeyEntry("ins/del (stat)"),
+    0x2ae: KeyEntry("ins/del (sd)"),
     0x319: KeyEntry("MC"),
     0x3dc: KeyEntry("INV"),
     0x3d8: KeyEntry("F1"),
@@ -140,11 +140,16 @@ key_entries = {
 }
 
 def describe_key_entries():
+    print("   ",
+          " ".join(f"{prefix:9s}"
+                   for prefix in ["", "INV", "F1", "F2",
+                                  "SD", "SD INV", "SD F2"]))
     for row in range(8):
         for col in range(1, 6):
             key = row * 10 + col
             ent = []
-            for prefix in [[], [KF], [41], [61], [KF, KMODE]]:
+            for prefix in [[], [KINV], [KF1], [KF2], [KINV, KMODE],
+                           [KINV, KMODE, KINV], [KINV, KMODE, KF2]]:
                 emul = create_emulator()
                 execute_seq(emul, prefix, print_disp=False)
                 emul.keycode = 0
@@ -157,8 +162,8 @@ def describe_key_entries():
                         break
                 else:
                     ent.append("???")
-            estr = " ".join(f"{d:13s}" for d in ent)
-            print(f"{key}: {estr}")
+            estr = " ".join(f"{d:9s}" for d in ent)
+            print(f"{key:-2d}: {estr}")
 
 def display(e):
     num = ""
