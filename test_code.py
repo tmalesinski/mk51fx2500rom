@@ -44,22 +44,22 @@ class TestCode(unittest.TestCase):
 
     def test_fx2500_inv_fun(self):
         # INV sqrt is a square function.
-        self.press([K4, 61, KSQRT])
+        self.press([K4, KINV, KSQRT])
         self.assertEqual(self.displayed_num(), 16)
 
     def test_fx2500_inv_digit(self):
         # INV digit just enters the digit.
-        self.press([K4, 61, K8])
+        self.press([K4, KINV, K8])
         self.assertEqual(self.displayed_num(), 48)
 
     def test_fx48_f2_digit(self):
         # F2 8 is square.
-        self.press([K4, 51, K8])
+        self.press([K4, KF2, K8])
         self.assertEqual(self.displayed_num(), 16)
 
     def test_fx48_f1_digit(self):
         # F1 8 is square root.
-        self.press([K4, 41, K8])
+        self.press([K4, KF1, K8])
         self.assertEqual(self.displayed_num(), 2)
 
     def test_fx2500_inv_state(self):
@@ -67,9 +67,9 @@ class TestCode(unittest.TestCase):
             return bit(self.emulator.regs[3][14], 3)
 
         self.assertEqual(state(), 0)
-        self.press([61])
+        self.press([KINV])
         self.assertEqual(state(), 1)
-        self.press([61])
+        self.press([KINV])
         self.assertEqual(state(), 0)
 
     def test_fx48_f1_state(self):
@@ -77,9 +77,9 @@ class TestCode(unittest.TestCase):
             return bit(self.emulator.regs[3][14], 0)
 
         self.assertEqual(state(), 0)
-        self.press([41])
+        self.press([KF1])
         self.assertEqual(state(), 1)
-        self.press([41])
+        self.press([KF1])
         self.assertEqual(state(), 0)
 
     def test_fx48_f2_state(self):
@@ -87,9 +87,9 @@ class TestCode(unittest.TestCase):
             return bit(self.emulator.regs[3][14], 1)
 
         self.assertEqual(state(), 0)
-        self.press([51])
+        self.press([KF2])
         self.assertEqual(state(), 1)
-        self.press([51])
+        self.press([KF2])
         self.assertEqual(state(), 0)
 
     def test_sd_state(self):
@@ -97,9 +97,9 @@ class TestCode(unittest.TestCase):
             return bit(self.emulator.regs[4][14], 3)
 
         self.assertEqual(state(), 0)
-        self.press([61, KMODE])
+        self.press([KINV, KMODE])
         self.assertEqual(state(), 1)
-        self.press([61, KMODE])
+        self.press([KINV, KMODE])
         self.assertEqual(state(), 0)
 
     def test_bin_op_nums(self):
@@ -116,7 +116,7 @@ class TestCode(unittest.TestCase):
         self.assertEqual(opnum(), 4)
         self.press([KC, K1, KPOW])
         self.assertEqual(opnum(), 3)
-        self.press([KC, K1, 61, KPOW])  # root
+        self.press([KC, K1, KINV, KPOW])  # root
         self.assertEqual(opnum(), 2)
 
     # def test_swap_reg(self):
