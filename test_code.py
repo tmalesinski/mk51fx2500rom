@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import sys, unittest
+from decimal import Decimal
 
 RE_REPOSITORY = "mk51fx2500re"
 if RE_REPOSITORY not in sys.path:
@@ -118,6 +119,46 @@ class TestCode(unittest.TestCase):
         self.assertEqual(opnum(), 3)
         self.press([KC, K1, KINV, KPOW])  # root
         self.assertEqual(opnum(), 2)
+
+    def test_addr01(self):
+        set_num(self.emulator, 0, Decimal("123.45"))
+        set_num(self.emulator, 1, Decimal("23.4"))
+        self.emulator.call(0x082)
+        self.assertEqual(decode_num(self.emulator.regs[0]),
+                         Decimal("146.85"))
+
+    def test_subr01(self):
+        set_num(self.emulator, 0, Decimal("123.45"))
+        set_num(self.emulator, 1, Decimal("23.4"))
+        self.emulator.call(0x081)
+        self.assertEqual(decode_num(self.emulator.regs[0]),
+                         Decimal("100.05"))
+
+    def test_mulr01(self):
+        a = Decimal("123.45")
+        b = Decimal("2.1")
+        set_num(self.emulator, 0, a)
+        set_num(self.emulator, 1, b)
+        self.emulator.call(0x0c2)
+        self.assertEqual(decode_num(self.emulator.regs[0]), a * b)
+
+    def test_divr01(self):
+        a = Decimal("123.45")
+        b = Decimal("2.1")
+        set_num(self.emulator, 0, a * b)
+        set_num(self.emulator, 1, b)
+        self.emulator.call(0x0c1)
+        self.assertEqual(decode_num(self.emulator.regs[0]), a)
+
+    def test_neg_abs_add1(self):
+        set_num(self.emulator, 0, Decimal("123.45"))
+        self.emulator.call(0x084)
+        self.assertEqual(decode_num(self.emulator.regs[0]),
+                         Decimal("-122.45"))
+        set_num(self.emulator, 0, Decimal("-123.45"))
+        self.emulator.call(0x084)
+        self.assertEqual(decode_num(self.emulator.regs[0]),
+                         Decimal("-122.45"))
 
     # def test_swap_reg(self):
     #     self.press([K4, K5, K6])
