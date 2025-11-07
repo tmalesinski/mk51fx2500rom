@@ -124,6 +124,7 @@ key_entries = {
     0x2de: KeyEntry("M in"),
     0x33b: KeyEntry("??? std"),
     0x2bc: KeyEntry("dms"),
+    0x3eb: KeyEntry("SD"),
     0x3dd: KeyEntry("MODE"),
     0x354: KeyEntry("+/-"),
     0x2dc: KeyEntry("MR"),
