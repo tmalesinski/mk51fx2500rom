@@ -122,7 +122,7 @@ key_entries = {
     0x36c: KeyEntry("exp/pi"),
     0x36d: KeyEntry("pi"),
     0x2de: KeyEntry("M in"),
-    0x33b: KeyEntry("??? std"),
+    0x33b: KeyEntry(lambda em: "std n" if em.regs[2][14] & 1 else "std n-1"),
     0x2bc: KeyEntry("dms"),
     0x3eb: KeyEntry("SD"),
     0x3dd: KeyEntry("MODE"),
@@ -130,8 +130,9 @@ key_entries = {
     0x2dc: KeyEntry("MR"),
     0x296: KeyEntry(
         lambda em: ["pow", "root", "/", "*", "-", "+"][em.regs[2][14] - 2]),
-    0x221: KeyEntry("trig"),
-    0x187: KeyEntry("inv trig"),
+    0x221: KeyEntry(lambda em: ["sin", "cos", "tan"][em.regs[2][14] - 3]),
+    0x187: KeyEntry(lambda em: ["sin", "cos", "tan"][em.regs[2][14] - 3]
+                    + "^-1"),
     0x2ac: KeyEntry(lambda em: "=" if em.regs[2][14] == 5 else "M+"),
     0x2ae: KeyEntry("ins/del (sd)"),
     0x319: KeyEntry("MC"),
