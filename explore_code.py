@@ -119,6 +119,7 @@ key_entries = {
     0x2ec: KeyEntry("1/x"),
     0x2ee: KeyEntry("n!"),
     0x34b: KeyEntry("sum x^2"),
+    0x31b: KeyEntry("sum x^2 *"),  # different path on FX-48
     0x36c: KeyEntry("exp/pi"),
     0x36d: KeyEntry("pi"),
     0x2de: KeyEntry("M in"),
