@@ -54,40 +54,6 @@ def get_key_trace(e, key):
         trace.append(e.pc)
     return trace
 
-def find_entry(key_trace, program):
-    key_acc = False
-    entry = key_trace[0]
-    for a in key_trace:
-        if a in [0x3ad, 0x380]: break
-        if key_acc:
-            entry = a
-        instr = decode_instr(a, program.get(a))
-        key_acc = False
-        mod = False
-        for m in ["ADD", "AND"]:
-            if instr.startswith(m):
-                mod = True
-        if not mod:
-            for p in ["R2 [14]", "R2 [13]", "R3 [14]"]:
-                if p in instr:
-                    key_acc = True
-                    break
-    return entry
-
-def get_key_entries():
-    traces = []
-    for row in range(8):
-        for col in range(1, 6):
-            key = row * 10 + col
-            e = []
-            for prefix in [[], [KF], [41], [61], [KF, KMODE]]:
-                emul = create_emulator()
-                execute_seq(emul, prefix, print_disp=False)
-                trace = get_key_trace(emul, key)
-                e.append(find_entry(trace, emul.prog))
-            estr = " ".join(f"{a:03x}" for a in e)
-            print(f"{key}: {estr}")
-
 class KeyEntry:
     def __init__(self, desc):
         self.desc = desc
